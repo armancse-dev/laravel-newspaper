@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\frontController;
+use App\Http\Controllers\adminController;
+use App\Http\Controllers\crudController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,15 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.index');
-});
-Route::get('category', function () {
-    return view('frontend.category');
-});
-Route::get('post', function () {
-    return view('frontend.article');
-});
-Route::get('admin', function () {
-    return view('backend.index');
-});
+
+
+Route::get('/', [frontController::class, 'index']);
+Route::get('category', [frontController::class, 'category']);
+Route::get('post', [frontController::class, 'post']);
+
+//admin
+Route::get('admin', [adminController::class, 'index']);
+Route::get('viewcategory', [adminController::class, 'viewcategory']);
+
+Route::POST('addcategory', [crudController::class, 'insertData']);
+
