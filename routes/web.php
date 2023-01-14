@@ -27,3 +27,8 @@ Route::get('viewcategory', [adminController::class, 'viewcategory']);
 
 Route::POST('addcategory', [crudController::class, 'insertData']);
 
+Route::get('editcategory/{id}', [adminController::class, 'editCategory']);
+Route::POST('updatecategory/{id}', [crudController::class, 'updateData']);
+
+Route::POST('multipledelete', [adminController::class, 'multipleDelete']);
+
