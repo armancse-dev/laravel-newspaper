@@ -23,6 +23,8 @@ Route::get('post', [frontController::class, 'post']);
 
 //admin
 Route::get('admin', [adminController::class, 'index']);
+
+//category
 Route::get('viewcategory', [adminController::class, 'viewcategory']);
 
 Route::POST('addcategory', [crudController::class, 'insertData']);
@@ -31,4 +33,8 @@ Route::get('editcategory/{id}', [adminController::class, 'editCategory']);
 Route::POST('updatecategory/{id}', [crudController::class, 'updateData']);
 
 Route::POST('multipledelete', [adminController::class, 'multipleDelete']);
+
+//settings
+Route::get('settings', [adminController::class, 'settings']);
+Route::POST('addsettings', [crudController::class, 'insertData']);
 

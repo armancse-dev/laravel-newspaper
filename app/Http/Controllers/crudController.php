@@ -15,6 +15,15 @@ class crudController extends Controller
         $tbl = decrypt($data['tbl']);
         unset($data['tbl']);
         $data['created_at'] = date('Y-m-d H:i:s');
+
+        if(Request::has('social')){
+            $data['social'] = implode(',',$data['social']);
+        }
+
+        if(Request::hasFile('image')){
+            $data['image'] = $this->uploadimage($tbl,$data['image']);
+        }
+
         DB::table($tbl)->insert($data);
         session::flash('message', 'Data Insert Successfully');
         return redirect()->back();
@@ -29,5 +38,13 @@ class crudController extends Controller
         return redirect()->back();
     }
 
-    
+    //img upload
+
+    public function uploadimage($location,$imagename){
+        $name = $imagename->getClientOriginalName();
+        $imagename->move(public_path().'/'.$location,date('ymdgis').$name);
+        return date('ymdgis').$name;
+    }
+
+
 }

@@ -7,7 +7,11 @@
 	<link rel="stylesheet" href="{{url('public/css/font-awesome.min.css')}}">
 	<link rel="stylesheet" href="{{url('public/css/ionicons.min.css')}}">
 	<link rel="stylesheet" href="{{url('public/css/menu.css')}}">
-	<link rel="stylesheet" href="{{url('public/css/adminstyle.css')}}">	
+	<link rel="stylesheet" href="{{url('public/css/adminstyle.css')}}">
+    <script type="text/javascript" src="{{url('public/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('public/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('public/js/app.min.js')}}"></script>
+    <script type="text/javascript" src="{{url('public/js/script.js')}}"></script>
 </head>
 <body>
 
@@ -59,7 +63,7 @@
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
-            </a>            
+            </a>
         </li>
         <li class="treeview">
             <a href="#">
@@ -73,6 +77,17 @@
               <li><a href="#"><i class="fa fa-plus-circle"></i>Add Reports</a></li>
             </ul>
         </li>
+
+        <li class="treeview">
+            <a href="{{url('settings')}}">
+              <i class="fa fa-bar-chart"></i> <span>Settings</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+
+        </li>
+
         <li class="treeview">
             <a href="#">
               <i class="fa fa-user-plus"></i> <span>Users</span>
@@ -96,7 +111,7 @@
               <li><a href="#"><i class="fa fa-edit"></i>Edit Profile</a></li>
               <li><a href="login.html"><i class="fa fa-power-off"></i>Log Out</a></li>
             </ul>
-        </li>		
+        </li>
 	</ul>
 </div>
 
@@ -104,16 +119,12 @@
 
 <footer>
 	<div class="col-sm-6">
-		Copyright &copy; 2018 <a href="http://www.webtrickshome.com">Webtrickshome.com</a> All rights reserved. 
+		Copyright &copy; 2018 <a href="http://www.webtrickshome.com">Webtrickshome.com</a> All rights reserved.
 	</div>
 	<div class="col-sm-6">
 		<span class="pull-right">Version 2.2.3</span>
 	</div>
 </footer>
 
-<script type="text/javascript" src="{{url('public/js/jquery.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/js/bootstrap.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/js/app.min.js')}}"></script>
-<script type="text/javascript" src="{{url('public/js/script.js')}}"></script>
 </body>
 </html>
