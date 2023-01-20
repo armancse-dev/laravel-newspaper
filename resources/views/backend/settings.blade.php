@@ -15,19 +15,22 @@
 			</div>
 			@endif
 			<h3>Website Settings</h3>
-			<form method="POST" action="{{url('addsettings')}}" enctype="multipart/form-data">
-				{{ csrf_field() }}
-				<input type="hidden" name="tbl" value="{{encrypt('settings')}}" >
-				<div class="form-group">
-					<label>Logo</label>
-					<input type="file" name="image" class="form-control">
+            @if (count($data) < 1)
+            <form method="POST" action="{{url('addsettings')}}" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <input type="hidden" name="tbl" value="{{encrypt('settings')}}" >
+                <div class="form-group">
+                    <label>Logo</label>
+                    <p><input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;"></p>
+                    <p><label for="file" style="cursor: pointer;" class="btn btn-warning" >Upload Image</label></p>
+                    <p><img id="output" /></p>
 
-				</div>
+                </div>
 
                 <div class="form-group">
-					<label>About Us</label>
-					<textarea name="about" cols="30" rows="10" class="form-control"></textarea>
-				</div>
+                    <label>About Us</label>
+                    <textarea name="about" cols="30" rows="10" class="form-control"></textarea>
+                </div>
                 <div id="socialFieldGroup">
                     <div class="form-group">
                         <label>Social</label>
@@ -46,10 +49,91 @@
                     </div>
                 </div>
 
-				<div class="form-group">
-					<button class="btn btn-primary">Add Settings</button>
-				</div>
-			</form>
+                <div class="form-group">
+                    <button class="btn btn-primary">Add Settings</button>
+                </div>
+            </form>
+            <script>
+                var socialCounter = 1;
+                $('#addSocialField').click(function(){
+                    socialCounter++;
+                    if(socialCounter > 5){
+                        $('#socialAlert').removeClass('noshow');
+                        return;
+                    }
+                    newDiv = $(document.createElement('div')).attr("class", "form-group");
+                    newDiv.after().html('<input type="url" name="social[]"  class="form-control"></div>');
+                    newDiv.appendTo("#socialFieldGroup");
+                })
+            </script>
+            @else
+            <form method="POST" action="{{url('updatesettings')}}/{{$data->sid}}" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <input type="hidden" name="tbl" value="{{encrypt('settings')}}" >
+                <input type="hidden" name="sid" value="{{$data->sid}}" >
+                <div class="form-group">
+                    <label>Logo</label>
+                    @if (!empty($data->image))
+                    <p><img src="{{url('public/settings')}}/{{$data->image}}" id="output" alt=""></p>
+                    <p><input type="file" accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;"></p>
+                    <p><label for="file" style="cursor: pointer;" class="btn btn-warning">Replce Image</label></p>
+                    <p><img id="output" width="200" /></p>
+                    @else
+                    <p><input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;"></p>
+                    <p><label for="file" style="cursor: pointer;">Upload Image</label></p>
+                    <p><img id="output"/></p>
+                    @endif
+
+                </div>
+
+                <div class="form-group">
+                    <label>About Us</label>
+                    <textarea name="about" cols="30" rows="10" class="form-control"> {{$data->about}} </textarea>
+                </div>
+                <div id="socialFieldGroup">
+                    <div class="form-group">
+                        <label>Social</label>
+                        @foreach ( $data->social as $social)
+
+                        <div class="form-group">
+                            <input type="url" name="social[]"  class="form-control socialCount" value="{{$social}}">
+                        </div>
+                        @endforeach
+
+
+                    </div>
+                </div>
+
+                <div class="text-right form-group">
+                    <span class="btn btn-warning" id="addSocialField"><i class="fa fa-plus"></i> </span>
+                </div>
+                <div class="form-group">
+                    <div class="alert alert-danger alert-dismissable noshow" id="socialCounter">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>Sorry !</strong>You have reached the social field login
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary">Update Settings</button>
+                </div>
+                <script>
+                    var socialCounter = $('.socialCount').length;
+                    $('#addSocialField').click(function(){
+                        socialCounter++;
+                        if(socialCounter > 5){
+                            $('#socialAlert').removeClass('noshow');
+                            return;
+                        }
+                        newDiv = $(document.createElement('div')).attr("class", "form-group");
+                        newDiv.after().html('<input type="url" name="social[]"  class="form-control"></div>');
+                        newDiv.appendTo("#socialFieldGroup");
+                    })
+
+
+                </script>
+            </form>
+            @endif
 		</div>
 	</div>
 </div>
@@ -58,19 +142,10 @@
 </style>
 
 <script>
-    var socialCounter = 1;
-    $('#addSocialField').click(function(){
-        socialCounter++;
-        if(socialCounter > 5){
-            $('#socialAlert').removeClass('noshow');
-            return;
-        }
-        newDiv = $(document.createElement('div')).attr("class", "form-group");
-        newDiv.after().html('<input type="url" name="social[]"  class="form-control"></div>');
-        newDiv.appendTo("#socialFieldGroup");
-    })
-
-
+    var loadFile = function(event) {
+        var image = document.getElementById('output');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    };
 </script>
 
 @stop

@@ -33,6 +33,14 @@ class crudController extends Controller
         $tbl = decrypt($data['tbl']);
         unset($data['tbl']);
         $data['updated_at'] = date('Y-m-d H:i:s');
+
+        if(Request::has('social')){
+            $data['social'] = implode(',',$data['social']);
+        }
+
+        if(Request::hasFile('image')){
+            $data['image'] = $this->uploadimage($tbl,$data['image']);
+        }
         DB::table($tbl)->where(key($data),reset($data))->update($data) ;
         session::flash('message', 'Data Update Successfully');
         return redirect()->back();

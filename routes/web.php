@@ -37,4 +37,5 @@ Route::POST('multipledelete', [adminController::class, 'multipleDelete']);
 //settings
 Route::get('settings', [adminController::class, 'settings']);
 Route::POST('addsettings', [crudController::class, 'insertData']);
+Route::POST('updatesettings/{id}', [crudController::class, 'updateData']);
 
